@@ -1,11 +1,26 @@
-import { documentosColecao } from "./dbConnect";
+import { documentosColecao } from "./dbConnect.js";
 
 function encontrarDocumento(nome) {
     const documento = documentosColecao.findOne({
-        nome
+        nome,
     });
 
     return documento;
 }
 
-export { encontrarDocumento };
+function atualizaDocumento(nome, texto) {
+    const atualizacao = documentosColecao.updateOne(
+        {
+            nome,
+        },
+        {
+            $set: {
+                texto,
+            },
+        }
+    );
+
+    return atualizacao;
+}
+
+export { encontrarDocumento, atualizaDocumento };

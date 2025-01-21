@@ -8,11 +8,11 @@ try {
     await cliente.connect();
 
     const db = cliente.db("alura-websockets");
-    const documentosColecao = db.collection("documentos");
+    documentosColecao = db.collection("documentos");
 
-    console.log("Conectado ao banco de dados!");
-} catch (error) {
-    console.log("Erro ao conectar no banco de dados", error);
+    console.log("Conectado ao banco de dados com sucesso!");
+} catch (erro) {
+    console.log(erro);
 }
 
 export { documentosColecao };
