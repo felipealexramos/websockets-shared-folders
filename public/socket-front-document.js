@@ -16,4 +16,10 @@ socket.on("texto_editor_clientes", (texto) => {
     atualizaTextoEditor(texto);
 });
 
-export { emitirTextoEditor, selecionarDocumento };
+function emitirExcluirDocumento(nomeDocumento) {
+    socket.emit("excluir_documento", nomeDocumento);
+
+    window.location.href = "index.html";
+}
+
+export { emitirTextoEditor, selecionarDocumento, emitirExcluirDocumento };
