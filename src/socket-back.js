@@ -8,16 +8,16 @@ io.on("connection", (socket) => {
         devolverDocumentos(documentos);
     });
 
-    socket.on("adicionar_documento", async (nomeDocumento) => {
-        const documentoExiste = (await encontrarDocumento(nomeDocumento)) !== null;
+    socket.on("adicionar_documento", async (nome) => {
+        const documentoExiste = (await encontrarDocumento(nome)) !== null;
 
         if (documentoExiste) {
-            socket.emit("erro_documento_existe", nomeDocumento);
+            socket.emit("documento_existente", nome);
         } else {
-            const resultado = await adicionarDocumento(nomeDocumento);
+            const resultado = await adicionarDocumento(nome);
 
             if (resultado.acknowledged) {
-                io.emit("adicionar_documento_interface", nomeDocumento);
+                io.emit("adicionar_documento_interface", nome);
             }
         }
     });
@@ -40,8 +40,12 @@ io.on("connection", (socket) => {
         }
     });
 
-    socket.on("excluir_documento", async (nomeDocumento) => {
-        const resultado = await excluirDocumento(nomeDocumento);
+    socket.on("excluir_documento", async (nome) => {
+        const resultado = await excluirDocumento(nome);
+
+        if (resultado.deletedCount) {
+            io.emit("excluir_documento_sucesso", nome);
+        }
     });
 });
 
